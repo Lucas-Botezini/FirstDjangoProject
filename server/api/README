@@ -1,0 +1,85 @@
+Como funciona o fluxo de criação dos registros no Django
+
+Cliente HTTP (POST)
+   │
+   ▼
+[View] CreateUserView (CreateAPIView) 
+   │   - recebe o request e chama UserSerializer
+   ▼
+[Serializer] UserSerializer
+   │   - valida dados
+   │   - separa "securitylevel"
+   │   - cria User com User.objects.create_user()
+   │   - cria UserClient associado
+   ▼
+[Banco]
+   - tabela auth_user  → novo usuário
+   - tabela api_userclient → registro vinculado ao usuário
+
+Cliente HTTP (POST)
+   │
+   ▼
+[View] DocumentListCreate (ListCreateAPIView)
+   │   - valida autenticação
+   │   - chama DocumentSerializer
+   ▼
+[Serializer] DocumentSerializer
+   │   - valida dados
+   │   - salva com serializer.save(author=request.user)
+   ▼
+[Banco]
+   - tabela api_document → novo documento vinculado ao usuário logado
+
+Comparação com Java com Spring
+
+Cliente HTTP (POST)
+   │
+   ▼
+[Controller] UserController
+   │   - recebe DTO UserDTO
+   ▼
+[Service] UserService
+   │   - valida dados
+   │   - cria entidade User
+   │   - salva em UserRepository
+   │   - cria entidade UserClient (com securitylevel)
+   │   - salva em UserClientRepository
+   ▼
+[Repository] UserRepository & UserClientRepository
+   │   - interface extends JpaRepository
+   ▼
+[Banco]
+   - tabela users  → novo usuário
+   - tabela user_client → registro vinculado ao usuário
+
+Cliente HTTP (POST)
+   │
+   ▼
+[Controller] DocumentController
+   │   - recebe DTO DocumentDTO
+   ▼
+[Service] DocumentService
+   │   - valida autenticação
+   │   - converte DTO → entidade Document
+   │   - adiciona author (usuário logado)
+   │   - chama DocumentRepository.save()
+   ▼
+[Repository] DocumentRepository
+   │   - interface extends JpaRepository<Document, Long>
+   ▼
+[Banco]
+   - tabela documents → novo documento vinculado ao usuário logado
+
+
+| Conceito                  | Django REST Framework                                         | Spring Boot (Java)                                      |
+| ------------------------- | ------------------------------------------------------------- | ------------------------------------------------------- |
+| **View**                  | View genérica (CreateAPIView, ListAPIView)                    | Controller (`@RestController`)                          |
+| **Serializer/DTO**        | Serializer (validação + conversão JSON↔objeto + lógica extra) | DTO (apenas transporte) + Mapper/Service para conversão |
+| **Model**                 | Model (`models.Model`)                                        | Entity (`@Entity`)                                      |
+| **Banco**                 | ORM automático (Django ORM)                                   | JPA/Hibernate com Repository (`JpaRepository`)          |
+| **UserClient criação**    | Dentro do `UserSerializer.create()`                           | No `UserService`, chamando dois repositories            |
+| **Autenticação JWT**      | SimpleJWT + config no settings.py                             | Spring Security + JWTFilter + Config                    |
+| **Menos camadas**         | View → Serializer → Model → Banco                             | Controller → DTO → Service → Repository → Banco         |
+| **Próximidade com banco** | Mais direta                                                   | Mais camadas (separa responsabilidades)                 |
+
+Django → usa serializers que fazem papel de DTO + Mapper + parte do Service.
