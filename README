@@ -1,0 +1,102 @@
+# Django – Apresentação e Tutorial
+
+Django é um **framework open source em Python** voltado para o desenvolvimento web.  
+Repositório oficial: [https://github.com/django/django](https://github.com/django/django)
+
+---
+
+## Vantagens e Desvantagens
+
+### ✅ Vantagens
+- **Desenvolvimento rápido e escalável:** abstrai muitas etapas manuais comuns, como configuração inicial e banco de dados SQLite integrado.  
+- **Documentação completa:** possui um guia oficial detalhado, incluindo primeiros passos. [Documentação Django](https://docs.djangoproject.com/en/5.2/)  
+- **Comunidade ativa:** ampla base de usuários e contribuidores.  
+- **Segurança:** proteção contra SQL Injection, XSS, CSRF e clickjacking. O sistema de autenticação é robusto e integrado.  
+
+### ❌ Desvantagens
+- **Benefícios a longo prazo:** por ser um framework de alto nível, pode se tornar pesado para projetos muito simples.  
+- **Desempenho:** em sistemas de grande escala, pode apresentar gargalos de performance.  
+- **Curva de aprendizado:** exige um nível inicial de dedicação para entender seu funcionamento.  
+
+---
+
+## Principais Características
+
+- **Arquitetura MTV (Model–Template–View):**
+  - **Model:** gerenciamento de dados e mapeamento para o banco.  
+  - **Template:** camada de visualização (HTML e renderização de páginas).  
+  - **View:** lógica de controle, equivalente ao *controller* em outros frameworks.  
+
+- **Interface de administração:** sistema pronto para gerenciamento dos dados do projeto.  
+- **Mapeamento de URLs:** permite definir rotas de forma simples e organizada.  
+- **Escalabilidade:** adequado tanto para pequenos quanto para grandes projetos.  
+- **Adoção por grandes empresas:** Instagram, Spotify, Pinterest e Mozilla utilizam Django em suas aplicações.  
+
+---
+
+## Servidores Web Disponíveis
+
+- **WSGI (Web Server Gateway Interface):** servidor síncrono, padrão em projetos Django.  
+- **ASGI (Asynchronous Server Gateway Interface):** sucessor do WSGI, projetado para aplicações assíncronas.  
+
+---
+
+## Configurações Necessárias
+
+1. **Instalar Python** e o gerenciador de pacotes **pip**.  
+2. Criar uma pasta para o projeto e instalar o Django:  
+   ```bash
+   pip install Django
+   ```
+3. Criar um novo projeto:  
+   ```bash
+   django-admin startproject mysite
+   ```
+4. Rodar o servidor local:  
+   ```bash
+   python manage.py runserver
+   ```
+   Acesse no navegador: [http://127.0.0.1:8000/](http://127.0.0.1:8000/)  
+
+5. Criar um aplicativo dentro do projeto:  
+   ```bash
+   python manage.py startapp app_name
+   ```
+
+6. Criar e atualizar o banco de dados (SQLite por padrão):  
+   ```bash
+   python manage.py makemigrations app_name
+   python manage.py migrate
+   ```
+
+---
+
+## Licença
+
+Django é distribuído sob a **licença BSD de 3 cláusulas**, que permite modificar e redistribuir livremente.  
+Referência: [Licença Django](https://docs.djangoproject.com/pt-br/5.2/faq/general/#:~:text=Django%20%C3%A9%20distribuido%20sobre%20a%20licen%C3%A7a%203%2Dcl%C3%A1usula%20BSD)
+
+---
+
+## Responsáveis pelo Desenvolvimento
+
+- Criadores: **Adrian Holovaty** e **Simon Willison**.  
+- Hoje é mantido pela comunidade através da **Django Software Foundation**.  
+Mais informações: [Django Foundation](https://www.djangoproject.com/foundation/teams/)  
+
+---
+
+## Conclusões
+
+- **Documentação:** muito bem estruturada e de fácil acesso.  
+- **Configuração:** simples para iniciar projetos e permite rápida escalabilidade.  
+- **Banco de dados:** já integrado com SQLite, facilitando a persistência de dados.  
+- **Escalabilidade e organização:** ao criar múltiplos apps (cada um com Models, Views e URLs), pode se tornar complexo em projetos muito grandes, mas a modularização também é um ponto positivo.  
+---
+
+## Referências
+
+- [Django – Visão Geral](https://www.djangoproject.com/start/overview/)  
+- [Documentação Oficial](https://docs.djangoproject.com/en/5.2/)  
+- [CareerFoundry – Guia Django](https://careerfoundry.com/en/blog/web-development/django-framework-guide/)  
+- [Artigo Alura sobre Django](https://www.alura.com.br/artigos/django-framework)  
